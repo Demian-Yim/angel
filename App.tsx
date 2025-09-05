@@ -162,13 +162,13 @@ const App: React.FC = () => {
 
   return (
     <div className="bg-gradient-to-b from-rose-50 to-[#fffaf0]">
-      <Header ref={headerRef} sections={SECTIONS} activeSection={activeSection} onNavClick={handleNavClick} />
+      <Header innerRef={headerRef} sections={SECTIONS} activeSection={activeSection} onNavClick={handleNavClick} />
       <main>
         <Hero />
         {SECTIONS.map((section) => (
           <ContentBlock
             key={section.id}
-            ref={(el) => {
+            innerRef={(el) => {
               sectionRefs.current[section.id] = el;
             }}
             title={section.mainTitle}

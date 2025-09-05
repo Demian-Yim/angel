@@ -1,16 +1,17 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import type { Section } from '../types';
 
 interface HeaderProps {
   sections: Section[];
   activeSection: string;
   onNavClick: (sectionId: string) => void;
+  innerRef: React.Ref<HTMLElement>;
 }
 
-const Header = forwardRef<HTMLElement, HeaderProps>(({ sections, activeSection, onNavClick }, ref) => {
+const Header = ({ sections, activeSection, onNavClick, innerRef }: HeaderProps) => {
   return (
     <header 
-      ref={ref}
+      ref={innerRef}
       className="sticky top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl shadow-sm transition-all duration-300"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,8 +49,6 @@ const Header = forwardRef<HTMLElement, HeaderProps>(({ sections, activeSection, 
       </div>
     </header>
   );
-});
-
-Header.displayName = 'Header';
+};
 
 export default Header;

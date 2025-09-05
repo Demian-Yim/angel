@@ -1,13 +1,14 @@
-import React, { forwardRef, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 interface ContentBlockProps {
   title: string;
   children: ReactNode;
+  innerRef: React.Ref<HTMLElement>;
 }
 
-const ContentBlock = forwardRef<HTMLElement, ContentBlockProps>(({ title, children }, ref) => {
+const ContentBlock = ({ title, children, innerRef }: ContentBlockProps) => {
   return (
-    <section ref={ref} className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+    <section ref={innerRef} className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto max-w-3xl">
         <div className="text-center mb-12">
            <h2 className="text-4xl md:text-5xl font-bold text-pink-700 inline-block">
@@ -22,8 +23,6 @@ const ContentBlock = forwardRef<HTMLElement, ContentBlockProps>(({ title, childr
       </div>
     </section>
   );
-});
-
-ContentBlock.displayName = 'ContentBlock';
+};
 
 export default ContentBlock;
