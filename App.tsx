@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import ContentBlock from './components/ContentBlock';
-import Footer from './components/Footer';
-import { SECTIONS } from './constants';
+import Header from './components/Header.tsx';
+import Hero from './components/Hero.tsx';
+import ContentBlock from './components/ContentBlock.tsx';
+import Footer from './components/Footer.tsx';
+import { SECTIONS } from './constants.ts';
 
 const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>(SECTIONS[0]?.id || '');

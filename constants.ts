@@ -1,4 +1,4 @@
-import type { Section } from './types';
+import type { Section } from './types.ts';
 
 export const SECTIONS: Section[] = [
   {

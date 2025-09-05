@@ -51,8 +51,12 @@
   }
 }
 </script>
+<!-- Add Babel to transpile JSX in the browser -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
     <div id="root"></div>
+    <!-- Add the entry point to your React app, explicitly setting presets for react and typescript -->
+    <script type="text/babel" data-type="module" data-presets="react,typescript" src="/index.tsx"></script>
 </body>
 </html>
