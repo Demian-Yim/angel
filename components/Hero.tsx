@@ -1,4 +1,5 @@
 import React from 'react';
+import DailyMessage from './DailyMessage.tsx';
 
 const Hero: React.FC = () => {
   return (
@@ -38,6 +39,8 @@ const Hero: React.FC = () => {
           너와 함께하는 모든 순간이 나의 가장 큰 예술이야.
         </p>
       </div>
+      
+      <DailyMessage />
 
        <div className="absolute bottom-10 text-2xl animate-bounce">
           <svg className="w-8 h-8 text-pink-400" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
