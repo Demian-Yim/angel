@@ -27,7 +27,7 @@ const Gemini: React.FC = () => {
         setIsCheckingConfig(true);
         setError(null);
         try {
-            const response = await fetch('/app-api/status');
+            const response = await fetch('/api/status');
             if (!response.ok) {
                 // This would be for 500 errors from the status check itself
                 throw new Error('Server status check failed');
@@ -58,7 +58,7 @@ const Gemini: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/app-api/gemini', {
+      const response = await fetch('/api/gemini', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ history: newMessages }),
@@ -99,7 +99,10 @@ const Gemini: React.FC = () => {
       console.error(e);
       const errorMessage = e instanceof Error ? e.message : "메시지를 보내는 데 실패했어요. 네트워크 연결을 확인해주세요.";
       setError(errorMessage);
-      setMessages(prev => prev.slice(0, prev.length - 1));
+      // Do not remove the user's message on error, but maybe handle it differently.
+      // For now, let's keep the history as is, but revert the input field.
+      // Let's remove the optimistic empty model response though.
+      setMessages(prev => prev.filter((msg, index) => !(index === prev.length - 1 && msg.role === 'model' && msg.text === '')));
       setUserInput(currentInput);
     } finally {
       setIsLoading(false);
