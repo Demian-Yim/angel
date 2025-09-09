@@ -34,7 +34,7 @@ const Gemini: React.FC = () => {
             }
             const data = await response.json();
             if (data.status !== 'ok') {
-                setError('앗, AI 데미안의 심장(API 키)이 아직 연결되지 않았어요! Vercel 프로젝트 설정에서 API_KEY를 추가했는지 다시 한번 확인해줄래? README.md 파일에 자세한 안내가 있어! ❤️');
+                setError('앗, AI 데미안의 심장(API 키)이 아직 연결되지 않았어요! Netlify 프로젝트 설정에서 API_KEY를 추가했는지 다시 한번 확인해줄래? README.md 파일에 자세한 안내가 있어! ❤️');
             }
         } catch (e) {
             console.error("API status check failed:", e);
