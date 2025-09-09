@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
           />
         </div>
 
-        <p className="text-sm mt-12 opacity-60 text-gray-500">&copy; {new Date().getFullYear()}. For my one and only angel.</p>
+        <p className="text-base mt-16 font-semibold text-rose-800/90">&copy; 2025. For my one and only angel.</p>
       </div>
     </footer>
   );

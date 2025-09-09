@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 
-// Define the YT type for the YouTube player API to avoid TS errors
 declare global {
   interface Window {
     onYouTubeIframeAPIReady?: () => void;
@@ -17,52 +16,50 @@ declare global {
 
 const MusicPlayer: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlayerReady, setIsPlayerReady] = useState(false);
   const playerRef = useRef<any>(null);
-  const videoId = 'Y8HOfcYWZoo'; // Celine Dion - The Power of Love
+  const playlistId = 'PLcaHoylU0Ow_c3KEWEhzKF0dr6iHJUmup';
+
+  const onPlayerReady = useCallback((event: any) => {
+    event.target.setVolume(50);
+    setIsPlayerReady(true);
+  }, []);
+
+  const onPlayerStateChange = useCallback((event: any) => {
+    if (event.data === window.YT?.PlayerState.PLAYING) {
+      setIsPlaying(true);
+    } else if (event.data === window.YT?.PlayerState.PAUSED || event.data === window.YT?.PlayerState.ENDED) {
+      setIsPlaying(false);
+    }
+  }, []);
 
   const createPlayer = useCallback(() => {
-    if (!window.YT) return;
-    playerRef.current = new window.YT.Player('youtube-player-container', {
-      height: '0',
-      width: '0',
-      videoId: videoId,
-      playerVars: {
-        autoplay: 1,
-        loop: 1,
-        playlist: videoId, // Required for loop to work correctly
-        controls: 0,
-        showinfo: 0,
-        modestbranding: 1,
-      },
-      events: {
-        onReady: (event: any) => {
-          // Attempt to play, volume set to a reasonable level
-          event.target.setVolume(50);
-          event.target.playVideo();
+    if (window.YT && window.YT.Player) {
+      playerRef.current = new window.YT.Player('youtube-player-container', {
+        height: '0',
+        width: '0',
+        playerVars: {
+          loop: 1,
+          listType: 'playlist',
+          list: playlistId,
         },
-        onStateChange: (event: any) => {
-          if (event.data === window.YT.PlayerState.PLAYING) {
-            setIsPlaying(true);
-          } else {
-            setIsPlaying(false);
-          }
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange,
         },
-      },
-    });
-  }, [videoId]);
+      });
+    }
+  }, [onPlayerReady, onPlayerStateChange, playlistId]);
 
   useEffect(() => {
     const loadYouTubeAPI = () => {
-      if (window.YT && window.YT.Player) {
-        createPlayer();
-      } else {
+      if (!window.YT) {
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         document.head.appendChild(tag);
-        
-        window.onYouTubeIframeAPIReady = () => {
-          createPlayer();
-        };
+        window.onYouTubeIframeAPIReady = createPlayer;
+      } else {
+        createPlayer();
       }
     };
 
@@ -77,8 +74,8 @@ const MusicPlayer: React.FC = () => {
   }, [createPlayer]);
 
   const togglePlay = () => {
-    if (!playerRef.current) return;
-    
+    if (!playerRef.current || !isPlayerReady) return;
+
     if (isPlaying) {
       playerRef.current.pauseVideo();
     } else {
@@ -88,13 +85,19 @@ const MusicPlayer: React.FC = () => {
 
   return (
     <>
-      <div id="youtube-player-container" className="fixed -top-full -left-full w-0 h-0"></div>
+      <div id="youtube-player-container" className="fixed -top-full -left-full"></div>
       <button
         onClick={togglePlay}
+        disabled={!isPlayerReady}
         aria-label={isPlaying ? "Pause background music" : "Play background music"}
-        className="fixed bottom-8 right-8 z-50 w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transform transition-all duration-300 hover:scale-110 flex items-center justify-center"
+        className="fixed bottom-8 right-8 z-50 w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transform transition-all duration-300 hover:scale-110 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {isPlaying ? (
+        {!isPlayerReady ? (
+           <svg className="animate-spin h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        ) : isPlaying ? (
           <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v4a1 1 0 11-2 0V8z" clipRule="evenodd" />
           </svg>

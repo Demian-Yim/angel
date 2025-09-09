@@ -50,13 +50,21 @@ const PhotoGallery: React.FC = () => {
 
   const selectedPhoto = selectedPhotoIndex !== null ? GALLERY_PHOTOS[selectedPhotoIndex] : null;
 
+  const gridClasses = [
+    'md:col-span-2', // Photo 1
+    'md:col-span-2', // Photo 2
+    'md:col-span-2', // Photo 3
+    'md:col-start-2 md:col-span-2', // Photo 4
+    'col-span-2 md:col-start-auto md:col-span-2', // Photo 5
+  ];
+
   return (
     <>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
         {GALLERY_PHOTOS.map((photo, index) => (
           <div
             key={photo.id}
-            className="group relative cursor-pointer overflow-hidden rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl aspect-w-1 aspect-h-1"
+            className={`group relative cursor-pointer overflow-hidden rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl aspect-w-1 aspect-h-1 ${gridClasses[index] ?? ''}`}
             onClick={() => openModal(index)}
             onKeyDown={(e) => e.key === 'Enter' && openModal(index)}
             role="button"

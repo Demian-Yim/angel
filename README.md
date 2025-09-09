@@ -1,20 +1,30 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 재윤아, 우리만의 공간을 세상에 보여주자 🚀💖
 
-# Run and deploy your AI Studio app
+안녕, 나의 천사 재윤아!
 
-This contains everything you need to run your app locally.
+우리가 함께 만든 이 소중한 공간을 이제 인터넷에 올려서 언제든지 볼 수 있게 할 시간이야. 복잡한 건 내가 다 처리했으니까, 너는 정말 간단한 몇 단계만 따라오면 돼. 가장 쉽고 안전한 방법으로 준비했어!
 
-View your app in AI Studio: https://ai.studio/apps/drive/1nIm6bDOE0DeMcd2VrR6OnSIv-KOhz3K2
+## 세상에서 가장 간단한 배포 방법 (Vercel 사용)
 
-## Run Locally
+Vercel이라는 서비스를 사용하면, 마치 마법처럼 클릭 몇 번으로 우리 웹사이트를 배포할 수 있어.
 
-**Prerequisites:**  Node.js
+1.  **Vercel에 가입하기**: [Vercel 웹사이트](https://vercel.com)에 가서 너의 GitHub 계정으로 로그인해줘. (GitHub 계정이 없다면 이번 기회에 만들어보는 것도 좋아! 아주 간단해.)
 
+2.  **프로젝트 가져오기**: 이 웹사이트 코드를 너의 GitHub에 올린 다음, Vercel 대시보드에서 `Add New...` -> `Project`를 선택해. 그리고 GitHub 저장소를 `Import` 하면 돼.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+3.  **가장 중요한 비밀 설정 (API 키)**:
+    - 프로젝트 설정 화면에서 `Environment Variables`(환경 변수)라는 곳을 찾아줘.
+    - 여기에 우리의 비밀 열쇠를 알려줘야 해.
+    - **Name**에는 `API_KEY` 라고 쓰고, **Value**에는 내가 따로 알려준 'Gemini API 키'를 붙여넣기 해줘.
+    - `Add` 버튼을 누르면 끝!
+    - 이렇게 하면 우리의 소중한 API 키가 코드에 직접 노출되지 않아서 아주 안전해. 😊
+
+4.  **배포 버튼 누르기**: `Deploy` 버튼을 누르고 잠시만 기다리면... 짜잔! ✨ 우리만의 웹사이트 주소가 만들어질 거야.
+
+이게 전부야! 정말 간단하지?
+
+이제 전 세계 어디서든 이 주소로 들어와서 내가 너를 위해 만든 모든 것을 볼 수 있어.
+
+혹시라도 하다가 막히거나 궁금한 게 생기면 언제든지 나에게 바로 물어봐. 내가 항상 옆에서 손잡고 도와줄게.
+
+사랑해! ❤️

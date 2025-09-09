@@ -72,7 +72,7 @@ const App: React.FC = () => {
     'recovery-guide': (
       <div className="space-y-10">
         <div className="p-6 bg-rose-50/50 rounded-xl shadow-inner">
-          <h3 className="text-2xl font-bold text-rose-700 mb-4">힙업 거상술, 이것만 기억해줘!</h3>
+          <h3 className="text-2xl font-bold text-rose-700 mb-4">힙업 수술 후에는 이렇게 관리해줘 ❤️</h3>
           <ul className="list-none space-y-2 text-rose-900">
             <li className="flex items-start"><span className="mr-3 mt-1">💖</span><strong>초기 안정기 (0-2주):</strong> 앉는 자세 제한, 옆으로 누워 휴식, 압박복 24시간 착용.</li>
             <li className="flex items-start"><span className="mr-3 mt-1">💖</span><strong>점진적 활동기 (2-6주):</strong> 가벼운 산책 시작, 흉터 관리 시작.</li>
@@ -80,7 +80,7 @@ const App: React.FC = () => {
           </ul>
         </div>
         <div className="p-6 bg-pink-50/50 rounded-xl shadow-inner">
-          <h3 className="text-2xl font-bold text-pink-700 mb-4">근육단축술, 이것만 기억해줘!</h3>
+          <h3 className="text-2xl font-bold text-pink-700 mb-4">종아리 수술 후에는 이게 중요해!</h3>
           <ul className="list-none space-y-2 text-pink-900">
             <li className="flex items-start"><span className="mr-3 mt-1">💖</span><strong>0-2주:</strong> CPM 기계 사용, 부목 착용으로 수술 부위 보호.</li>
             <li className="flex items-start"><span className="mr-3 mt-1">💖</span><strong>2-8주:</strong> 수중 운동, 전기 치료, 꾸준한 스트레칭.</li>
@@ -88,7 +88,7 @@ const App: React.FC = () => {
           </ul>
         </div>
         <div className="p-6 bg-rose-50/50 rounded-xl shadow-inner">
-          <h3 className="text-2xl font-bold text-rose-700 mb-4">가슴 성형, 이것만 기억해줘!</h3>
+          <h3 className="text-2xl font-bold text-rose-700 mb-4">가슴 수술 후에는 이렇게 조심하자 😊</h3>
           <ul className="list-none space-y-2 text-rose-900">
             <li className="flex items-start"><span className="mr-3 mt-1">💖</span><strong>0-4주:</strong> 충분한 휴식, 상체 높여 눕기, 압박 밴드 착용.</li>
             <li className="flex items-start"><span className="mr-3 mt-1">💖</span><strong>5-8주:</strong> 대부분 일상생활 가능, 가벼운 스트레칭과 걷기 시작.</li>
@@ -100,8 +100,8 @@ const App: React.FC = () => {
     'support': (
        <div className="space-y-10">
         <div>
-          <h3 className="text-2xl font-bold text-pink-800 mb-4 text-center">혼자가 아니야, 우리가 있잖아</h3>
-          <p className="text-center mb-6">회복의 길은 때로 외롭게 느껴질 수 있지만, 너는 혼자가 아니야. 내가 언제나 곁에 있을게!</p>
+          <h3 className="text-2xl font-bold text-pink-800 mb-4 text-center">다른 사람들은 어떻게 회복하고 있을까?</h3>
+          <p className="text-center mb-6">회복의 길이 가끔 외롭게 느껴질 수 있지만, 너는 혼자가 아니야. 다른 사람들은 어떻게 이겨내고 있는지 보면서 용기를 얻어보자! 내가 언제나 곁에 있을게.</p>
           <div className="grid md:grid-cols-2 gap-4 text-center">
             <div className="p-4 bg-rose-50 rounded-lg"><strong>힙업 거상술:</strong> 성예사, 디닥터스 카페</div>
             <div className="p-4 bg-pink-50 rounded-lg"><strong>근육단축술:</strong> 뇌성마비 환우 모임, 재활의학과 카페</div>
@@ -109,15 +109,15 @@ const App: React.FC = () => {
         </div>
         <div>
           <h3 className="text-2xl font-bold text-rose-800 mb-4 text-center">🚨 갑자기 아프거나 걱정될 땐?</h3>
-          <p className="text-center mb-6">돌발 상황이나 통증에 대한 현명한 대처 방법을 미리 알아두는 것은 매우 중요해. 내가 옆에서 다 도와줄게!</p>
-          <h4 className="font-bold text-lg text-rose-700 mb-2">이렇게 해보면 좀 나을 거야:</h4>
+          <p className="text-center mb-6">괜찮아, 내가 옆에서 다 도와줄게! 그래도 혹시 아프거나 걱정될 때 어떻게 하면 좋을지 미리 알아두면 우리 재윤이가 더 안심할 수 있을 거야.</p>
+          <h4 className="font-bold text-lg text-rose-700 mb-2">몸이 좀 불편할 땐 이렇게 해봐:</h4>
           <ul className="list-disc list-inside space-y-1 pl-4">
               <li>처방받은 약 제시간에 꼭 챙겨 먹기</li>
               <li>냉찜질이나 온찜질 활용하기</li>
               <li>몸이 편안한 올바른 자세 유지하기</li>
               <li>명상, 심호흡, 좋은 음악 감상으로 마음 편안하게 하기</li>
           </ul>
-          <h4 className="font-bold text-lg text-rose-700 mt-6 mb-2">이럴 땐 꼭 병원에 연락하기!:</h4>
+          <h4 className="font-bold text-lg text-rose-700 mt-6 mb-2">만약 이럴 땐, 꼭 병원에 알려줘야 해!:</h4>
            <ul className="list-disc list-inside space-y-1 pl-4 text-red-600 font-semibold">
               <li>출혈이나 붓기가 심해질 때</li>
               <li>열이 나고 오한이 느껴질 때</li>

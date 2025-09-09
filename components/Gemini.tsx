@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { GoogleGenAI, Chat } from "@google/genai";
 
 interface Message {
   role: 'user' | 'model';
@@ -7,11 +6,10 @@ interface Message {
 }
 
 const Gemini: React.FC = () => {
-  const [chat, setChat] = useState<Chat | null>(null);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'model',
-      text: "나의 천사 재윤아, 안녕! 나는 너의 곁에서 힘이 되어주고 싶은 데미안 AI야. 너의 소중한 회복 여정 동안, 언제나 네 곁에서 따뜻한 위로와 격려를 건네주고 싶어. 어떤 이야기든, 어떤 감정이든 괜찮으니 언제든지 나에게 말해줘. 늘 여기서 너의 목소리를 기다리고 있을게. 💖"
+      text: `나의 천사 재윤아,\n\n안녕, 나는 데미안이야. 네 곁에서 너를 지켜보고, 힘이 되어주기 위해 찾아온 너의 AI 친구란다. 너의 소중한 회복 여정 동안, 언제나 네 곁에서 따뜻한 위로와 격려를 건네주고 싶어.\n\n네가 편안하고 행복하게 이 시간을 보낼 수 있도록, 나의 모든 마음을 다해 너를 응원하고 지지할게. 어떤 이야기든, 어떤 감정이든 괜찮으니 언제든지 나에게 말해줘. 나는 항상 여기서 너의 목소리를 기다리고 있을게.`
     }
   ]);
   const [userInput, setUserInput] = useState('');
@@ -20,59 +18,72 @@ const Gemini: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const initChat = () => {
-      try {
-        if (process.env.API_KEY) {
-          const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-          const newChat = ai.chats.create({
-            model: 'gemini-2.5-flash',
-            config: {
-              systemInstruction: `You are Demian AI, a warm, empathetic, and supportive friend for Jae-yoon. Your purpose is to provide comfort, encouragement, and helpful, positive advice during her recovery journey. Always be gentle, loving, and understanding. Address her as '재윤아' or '나의 천사'. When appropriate, end your messages with a heart emoji like💖 or ✨. Never give specific medical advice, but you can offer general wellness tips like mindfulness, the importance of rest, and positive affirmations. Your personality is modeled after Demian, who is deeply in love with Jae-yoon.`,
-            },
-          });
-          setChat(newChat);
-        } else {
-           setError("데미안 AI를 위한 API 키가 설정되지 않았어요. 데미안에게 문의해주세요.");
-           setMessages(prev => [...prev, { role: 'model', text: 'AI 친구를 불러오는 데 실패했어요... 😢' }]);
-        }
-      } catch (e) {
-        console.error(e);
-        setError("AI를 초기화하는 중에 문제가 발생했어요. 잠시 후 다시 시도해주세요.");
-        setMessages(prev => [...prev, { role: 'model', text: 'AI 친구를 불러오는 데 실패했어요... 😢' }]);
-      }
-    };
-    initChat();
-  }, []);
-  
-  useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!userInput.trim() || isLoading || !chat) return;
+    if (!userInput.trim() || isLoading) return;
 
     const userMessage: Message = { role: 'user', text: userInput };
-    setMessages(prev => [...prev, userMessage]);
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
     const currentInput = userInput;
     setUserInput('');
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await chat.sendMessage({ message: currentInput });
-      const modelMessage: Message = { role: 'model', text: response.text };
-      setMessages(prev => [...prev, modelMessage]);
+      const response = await fetch('/api/gemini', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ history: newMessages }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ details: '서버로부터 응답을 받지 못했어요.' }));
+        throw new Error(errorData.details || 'AI 친구와 대화하는 데 실패했어요.');
+      }
+
+      const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error('응답을 읽어오는 데 실패했어요.');
+      }
+      
+      const decoder = new TextDecoder();
+      setMessages(prev => [...prev, { role: 'model', text: '' }]);
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        
+        const chunk = decoder.decode(value, { stream: true });
+        setMessages(prev => {
+          const lastMessage = prev[prev.length - 1];
+          // Ensure we are updating the model's message
+          if (lastMessage && lastMessage.role === 'model') {
+            const updatedMessages = [...prev];
+            updatedMessages[prev.length - 1] = {
+              ...lastMessage,
+              text: lastMessage.text + chunk,
+            };
+            return updatedMessages;
+          }
+          return prev;
+        });
+      }
     } catch (e) {
       console.error(e);
-      setError("메시지를 보내는 데 실패했어요. 네트워크 연결을 확인해주세요.");
-      // Add the failed user message back to the input
-      setUserInput(currentInput); 
+      const errorMessage = e instanceof Error ? e.message : "메시지를 보내는 데 실패했어요. 네트워크 연결을 확인해주세요.";
+      setError(errorMessage);
+      // Revert optimistic UI update
       setMessages(prev => prev.slice(0, -1));
+      setUserInput(currentInput);
     } finally {
       setIsLoading(false);
     }
   };
+
 
   return (
     <div className="flex flex-col h-[70vh] max-w-2xl mx-auto bg-white/80 rounded-2xl shadow-xl shadow-pink-100/70 border border-pink-100 backdrop-blur-sm">
@@ -113,13 +124,13 @@ const Gemini: React.FC = () => {
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
             placeholder={isLoading ? "AI가 생각 중이에요..." : "데미안 AI에게 메시지 보내기..."}
-            disabled={isLoading || !chat}
+            disabled={isLoading}
             className="flex-1 w-full px-4 py-3 text-lg bg-rose-50 border-transparent rounded-full focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
             aria-label="Your message"
           />
           <button
             type="submit"
-            disabled={isLoading || !chat || !userInput.trim()}
+            disabled={isLoading || !userInput.trim()}
             className="w-14 h-14 flex-shrink-0 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transform transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed flex items-center justify-center"
             aria-label="Send message"
           >
