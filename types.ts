@@ -4,3 +4,10 @@ export interface Section {
   navTitle: string;
   mainTitle: string;
 }
+
+export interface GalleryPhoto {
+  id: number;
+  src: string;
+  alt: string;
+  caption: string;
+}

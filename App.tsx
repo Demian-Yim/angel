@@ -5,6 +5,7 @@ import ContentBlock from './components/ContentBlock.tsx';
 import Footer from './components/Footer.tsx';
 import MusicPlayer from './components/MusicPlayer.tsx';
 import Gemini from './components/Gemini.tsx';
+import PhotoGallery from './components/PhotoGallery.tsx';
 import { SECTIONS } from './constants.ts';
 
 const App: React.FC = () => {
@@ -127,30 +128,41 @@ const App: React.FC = () => {
       </div>
     ),
     'memories': (
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-8">
-          <a 
-            href="https://www.icloud.com/sharedalbum/#B2ZG4TcsmHH43e" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group text-center"
-          >
-            <div className="bg-white p-3 rounded-lg shadow-lg group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2">
-              <img src="https://i.imgur.com/NHjHD6K.jpeg" alt="Album cover for 2025 Angel & Demian" className="w-64 h-64 object-cover rounded-md" />
+        <>
+            <p className="text-center mb-8">우리가 함께한 모든 순간은 별처럼 빛나. 사진을 클릭해서 더 크게 봐봐! ✨</p>
+            <PhotoGallery />
+            <div className="mt-16 text-center">
+              <div className="inline-block">
+                 <h3 className="text-3xl font-bold text-pink-700 mb-4">iCloud 공유 앨범</h3>
+                 <div className="mt-2 h-1 w-20 mx-auto bg-gradient-to-r from-pink-400 to-rose-400 rounded-full"></div>
+              </div>
+              <p className="mt-6 mb-8 max-w-xl mx-auto">이곳에 담지 못한 더 많은 사진과 영상들은 아래 공유 앨범에서 볼 수 있어. 우리의 모든 추억이 여기에 담겨있어!</p>
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-8">
+                  <a
+                    href="https://www.icloud.com/sharedalbum/#B2ZG4TcsmHH43e"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group text-center"
+                  >
+                    <div className="bg-white p-3 rounded-lg shadow-lg group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2">
+                      <img src="https://i.imgur.com/NHjHD6K.jpeg" alt="Album cover for 2025 Angel & Demian" className="w-48 h-48 object-cover rounded-md" />
+                    </div>
+                    <p className="mt-4 font-semibold text-rose-700 text-lg">2025 Angel & Demian</p>
+                  </a>
+                  <a
+                    href="https://www.icloud.com/sharedalbum/#B2Z5nhQSTGd7snY"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group text-center"
+                  >
+                    <div className="bg-white p-3 rounded-lg shadow-lg group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2">
+                      <img src="https://i.imgur.com/83izx6D.jpeg" alt="Album cover for Kiss" className="w-48 h-48 object-cover rounded-md" />
+                    </div>
+                    <p className="mt-4 font-semibold text-pink-700 text-lg">Kiss Album</p>
+                  </a>
+                </div>
             </div>
-            <p className="mt-4 font-semibold text-rose-700 text-lg">2025 Angel & Demian</p>
-          </a>
-          <a 
-            href="https://www.icloud.com/sharedalbum/#B2Z5nhQSTGd7snY" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group text-center"
-          >
-            <div className="bg-white p-3 rounded-lg shadow-lg group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2">
-              <img src="https://i.imgur.com/83izx6D.jpeg" alt="Album cover for Kiss" className="w-64 h-64 object-cover rounded-md" />
-            </div>
-            <p className="mt-4 font-semibold text-pink-700 text-lg">Kiss Album</p>
-          </a>
-        </div>
+          </>
     ),
     'from-demian': (
       <>
