@@ -26,4 +26,9 @@ export const SECTIONS: Section[] = [
     navTitle: '데미안의 편지',
     mainTitle: '💌 너에게 쓰는 편지',
   },
+  {
+    id: 'demian-ai',
+    navTitle: '데미안 AI',
+    mainTitle: '💬 너만을 위한 AI 친구',
+  },
 ];
