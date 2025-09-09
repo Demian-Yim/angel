@@ -2,7 +2,12 @@
   "name": "for-my-angel-jaeyoon",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "prestart": "rm -rf api vercel.json",
+    "start": "node server.js"
+  },
   "dependencies": {
-    "@google/genai": "^0.14.0"
+    "@google/genai": "^0.14.0",
+    "express": "^4.19.2"
   }
 }

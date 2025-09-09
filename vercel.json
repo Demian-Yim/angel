@@ -3,15 +3,14 @@
     "api/gemini.ts": {
       "maxDuration": 30,
       "memory": 1024
+    },
+    "api/status.ts": {
+      "maxDuration": 5
     }
   },
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "/api/:path*"
-    },
-    {
-      "source": "/:path*",
+      "source": "/((?!api/|.*\\.).*)",
       "destination": "/index.html"
     }
   ],
