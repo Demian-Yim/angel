@@ -9,11 +9,11 @@ export const SECTIONS: Section[] = [
   {
     id: 'recovery-guide',
     navTitle: '회복 가이드',
-    mainTitle: '🩺 데미안의 섬세한 회복 가이드',
+    mainTitle: '🩺 재윤이를 위한 회복 꿀팁',
   },
   {
     id: 'support',
-    navTitle: '응원 & 안전수칙',
+    navTitle: '함께할게',
     mainTitle: '🫂 함께라서 괜찮아',
   },
   {

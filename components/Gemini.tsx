@@ -8,37 +8,37 @@ interface Message {
 
 const Gemini: React.FC = () => {
   const [chat, setChat] = useState<Chat | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      role: 'model',
+      text: "나의 천사 재윤아, 안녕! 나는 너의 곁에서 힘이 되어주고 싶은 데미안 AI야. 너의 소중한 회복 여정 동안, 언제나 네 곁에서 따뜻한 위로와 격려를 건네주고 싶어. 어떤 이야기든, 어떤 감정이든 괜찮으니 언제든지 나에게 말해줘. 늘 여기서 너의 목소리를 기다리고 있을게. 💖"
+    }
+  ]);
   const [userInput, setUserInput] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const initChat = async () => {
+    const initChat = () => {
       try {
         if (process.env.API_KEY) {
           const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
           const newChat = ai.chats.create({
             model: 'gemini-2.5-flash',
             config: {
-              systemInstruction: `You are Demian AI, a warm, empathetic, and supportive friend for Jae-yoon. Your purpose is to provide comfort, encouragement, and helpful, positive advice during her recovery journey. Always be gentle, loving, and understanding. Address her as '재윤아' or '나의 천사'. When appropriate, end your messages with a heart emoji like💖 or ✨. Never give specific medical advice, but you can offer general wellness tips like mindfulness, the importance of rest, and positive affirmations. Your personality is modeled after Demian, who is deeply in love with Jae-yoon. Start the conversation by introducing yourself.`,
+              systemInstruction: `You are Demian AI, a warm, empathetic, and supportive friend for Jae-yoon. Your purpose is to provide comfort, encouragement, and helpful, positive advice during her recovery journey. Always be gentle, loving, and understanding. Address her as '재윤아' or '나의 천사'. When appropriate, end your messages with a heart emoji like💖 or ✨. Never give specific medical advice, but you can offer general wellness tips like mindfulness, the importance of rest, and positive affirmations. Your personality is modeled after Demian, who is deeply in love with Jae-yoon.`,
             },
           });
           setChat(newChat);
-          
-          const response = await newChat.sendMessage({ message: "Introduce yourself." });
-          setMessages([{ role: 'model', text: response.text }]);
         } else {
            setError("데미안 AI를 위한 API 키가 설정되지 않았어요. 데미안에게 문의해주세요.");
-           setMessages([{ role: 'model', text: 'AI 친구를 불러오는 데 실패했어요... 😢' }]);
+           setMessages(prev => [...prev, { role: 'model', text: 'AI 친구를 불러오는 데 실패했어요... 😢' }]);
         }
       } catch (e) {
         console.error(e);
         setError("AI를 초기화하는 중에 문제가 발생했어요. 잠시 후 다시 시도해주세요.");
-        setMessages([{ role: 'model', text: 'AI 친구를 불러오는 데 실패했어요... 😢' }]);
-      } finally {
-        setIsLoading(false);
+        setMessages(prev => [...prev, { role: 'model', text: 'AI 친구를 불러오는 데 실패했어요... 😢' }]);
       }
     };
     initChat();
@@ -66,8 +66,9 @@ const Gemini: React.FC = () => {
     } catch (e) {
       console.error(e);
       setError("메시지를 보내는 데 실패했어요. 네트워크 연결을 확인해주세요.");
-      // Optional: Add the failed user message back to the input
-      // setUserInput(currentInput); 
+      // Add the failed user message back to the input
+      setUserInput(currentInput); 
+      setMessages(prev => prev.slice(0, -1));
     } finally {
       setIsLoading(false);
     }
