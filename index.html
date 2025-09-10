@@ -4,11 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Angel 정재윤의 빛나는 회복 여정</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Playfair+Display:wght@700&family=Lobster&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="/style.css">
+
+<!-- This is the new, correct way to add custom fonts to Tailwind CSS -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            // Registering 'Nanum Pen Script' as 'font-handwriting'
+            handwriting: ['Nanum Pen Script', 'cursive'],
+            // Making 'Noto Sans KR' the default font for the entire site
+            sans: ['Noto Sans KR', 'sans-serif'],
+          },
+        }
+      }
+    }
+</script>
+
 <script type="importmap">
 {
   "imports": {

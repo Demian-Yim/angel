@@ -32,7 +32,7 @@ const Hero: React.FC = () => {
       </div>
       
       <div className="relative z-10 animate-fade-in animation-delay-400 mt-8">
-        <h1 className="font-display text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-rose-500 mb-4">
+        <h1 className="font-handwriting text-6xl md:text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-rose-500 mb-4">
           To My Dearest Angel, 재윤
         </h1>
         <p className="text-xl md:text-2xl text-rose-800/80 font-medium">

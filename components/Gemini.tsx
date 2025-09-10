@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 interface Message {
   role: 'user' | 'model';
@@ -22,29 +22,29 @@ const Gemini: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  useEffect(() => {
-    const checkApiConfig = async () => {
-        setIsCheckingConfig(true);
-        setError(null);
-        try {
-            const response = await fetch('/api/status');
-            if (!response.ok) {
-                // This would be for 500 errors from the status check itself
-                throw new Error('Server status check failed');
-            }
-            const data = await response.json();
-            if (data.status !== 'ok') {
-                setError('앗, AI 데미안의 심장(API 키)이 아직 연결되지 않았어요! Netlify 프로젝트 설정에서 API_KEY를 추가했는지 다시 한번 확인해줄래? README.md 파일에 자세한 안내가 있어! ❤️');
-            }
-        } catch (e) {
-            console.error("API status check failed:", e);
-            setError('AI 데미안과 연결하는 데 실패했어요. 😢 혹시 방금 배포했다면, 1-2분 후에 페이지를 새로고침 해볼래? 문제가 계속되면 Netlify 배포 설정에 도움이 필요할 수 있으니 데미안에게 알려줘!');
-        } finally {
-            setIsCheckingConfig(false);
-        }
-    };
-    checkApiConfig();
+  const checkApiConfig = useCallback(async () => {
+      setIsCheckingConfig(true);
+      setError(null);
+      try {
+          const response = await fetch('/api/status');
+          if (!response.ok) {
+              throw new Error('Server status check failed');
+          }
+          const data = await response.json();
+          if (data.status !== 'ok') {
+              setError('앗, AI 데미안의 심장(API 키)이 아직 연결되지 않았어요! Netlify 프로젝트 설정에서 API_KEY를 추가했는지 다시 한번 확인해줄래? README.md 파일에 자세한 안내가 있어! ❤️');
+          }
+      } catch (e) {
+          console.error("API status check failed:", e);
+          setError('AI 데미안과 연결이 잠시 불안정한 것 같아. 아래 버튼을 눌러 다시 연결해볼까?');
+      } finally {
+          setIsCheckingConfig(false);
+      }
   }, []);
+
+  useEffect(() => {
+    checkApiConfig();
+  }, [checkApiConfig]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,6 +56,7 @@ const Gemini: React.FC = () => {
     const currentInput = userInput;
     setUserInput('');
     setIsLoading(true);
+    setError(null);
 
     try {
       const response = await fetch('/api/gemini', {
@@ -99,9 +100,6 @@ const Gemini: React.FC = () => {
       console.error(e);
       const errorMessage = e instanceof Error ? e.message : "메시지를 보내는 데 실패했어요. 네트워크 연결을 확인해주세요.";
       setError(errorMessage);
-      // Do not remove the user's message on error, but maybe handle it differently.
-      // For now, let's keep the history as is, but revert the input field.
-      // Let's remove the optimistic empty model response though.
       setMessages(prev => prev.filter((msg, index) => !(index === prev.length - 1 && msg.role === 'model' && msg.text === '')));
       setUserInput(currentInput);
     } finally {
@@ -153,8 +151,14 @@ const Gemini: React.FC = () => {
       )}
 
       {error && !isCheckingConfig && (
-        <div className="px-6 py-3 text-center text-red-600 bg-red-50/70 border-t border-pink-100/50">
+        <div className="px-6 py-4 text-center text-red-600 bg-red-50/70 border-t border-pink-100/50 flex flex-col items-center gap-3">
             <p className="text-sm font-semibold">{error}</p>
+            <button
+                onClick={checkApiConfig}
+                className="px-4 py-1.5 text-sm font-bold text-white bg-gradient-to-r from-pink-500 to-rose-500 rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+            >
+                🔄 다시 시도
+            </button>
         </div>
       )}
        

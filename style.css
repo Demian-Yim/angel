@@ -1,17 +1,14 @@
 
 body {
-    font-family: 'Noto Sans KR', sans-serif;
     background-color: #fffaf0; /* Changed to a warm, floral white */
 }
-h1, h2, .font-display {
-    font-family: 'Playfair Display', serif;
-}
-.font-handwriting {
-    font-family: 'Lobster', cursive;
-}
-.font-handwriting-2 {
-    font-family: 'Nanum Pen Script', cursive;
-}
+
+/*
+  The custom font rules have been removed from this file.
+  All fonts are now configured directly in index.html via tailwind.config
+  to prevent conflicts and ensure they work reliably across the entire app.
+*/
+
 @keyframes float {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }

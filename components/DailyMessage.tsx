@@ -17,8 +17,8 @@ const DailyMessage: React.FC = () => {
   return (
     <div className="relative z-10 mt-12 animate-fade-in animation-delay-600 w-full max-w-2xl mx-auto">
       <div className="bg-white/70 backdrop-blur-md p-6 rounded-xl shadow-lg shadow-rose-100/80 border border-rose-200/50">
-        <h3 className="text-xl font-bold text-center text-rose-600 font-handwriting-2 mb-3">💌 오늘의 응원 메시지</h3>
-        <p className="text-2xl md:text-3xl text-center text-gray-700 font-handwriting-2">
+        <h3 className="text-xl font-bold text-center text-rose-600 font-handwriting mb-3">💌 오늘의 응원 메시지</h3>
+        <p className="text-2xl md:text-3xl text-center text-gray-700 font-handwriting">
           "{message}"
         </p>
       </div>

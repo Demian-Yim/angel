@@ -95,7 +95,7 @@ const PhotoGallery: React.FC = () => {
               alt={selectedPhoto.alt}
               className="w-auto h-auto max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
             />
-            <p id="photo-caption" className="text-center text-white mt-4 text-2xl font-handwriting-2">{selectedPhoto.caption}</p>
+            <p id="photo-caption" className="text-center text-white mt-4 text-2xl font-handwriting">{selectedPhoto.caption}</p>
           </div>
           
           <button
