@@ -27,7 +27,7 @@ const Gemini: React.FC = () => {
         setIsCheckingConfig(true);
         setError(null);
         try {
-            const response = await fetch('/.netlify/functions/status');
+            const response = await fetch('/api/status');
             if (!response.ok) {
                 // This would be for 500 errors from the status check itself
                 throw new Error('Server status check failed');
@@ -38,7 +38,7 @@ const Gemini: React.FC = () => {
             }
         } catch (e) {
             console.error("API status check failed:", e);
-            setError('AI 데미안의 상태를 확인하지 못했어요. 네트워크나 서버 설정에 문제가 있을 수 있어.');
+            setError('AI 데미안과 연결하는 데 실패했어요. 😢 혹시 방금 배포했다면, 1-2분 후에 페이지를 새로고침 해볼래? 문제가 계속되면 Netlify 배포 설정에 도움이 필요할 수 있으니 데미안에게 알려줘!');
         } finally {
             setIsCheckingConfig(false);
         }
@@ -58,7 +58,7 @@ const Gemini: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/.netlify/functions/gemini', {
+      const response = await fetch('/api/gemini', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ history: newMessages }),
