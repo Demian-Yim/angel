@@ -28,15 +28,15 @@ const Gemini: React.FC = () => {
       try {
           const response = await fetch('/api/status');
           if (!response.ok) {
-              throw new Error('Server status check failed');
+              throw new Error('서버에서 오류가 발생했어요. 잠시 후 다시 시도해 주세요.');
           }
           const data = await response.json();
           if (data.status !== 'ok') {
-              setError('앗, AI 데미안의 심장(API 키)이 아직 연결되지 않았어요! Netlify 프로젝트 설정에서 API_KEY를 추가했는지 다시 한번 확인해줄래? README.md 파일에 자세한 안내가 있어! ❤️');
+              setError('앗, AI 데미안의 심장(API 키)이 아직 연결되지 않았어요! Vercel 프로젝트 설정에서 API_KEY를 추가했는지 다시 한번 확인해줄래? README.md 파일에 자세한 안내가 있어! ❤️');
           }
       } catch (e) {
           console.error("API status check failed:", e);
-          setError('AI 데미안과 연결이 잠시 불안정한 것 같아. 아래 버튼을 눌러 다시 연결해볼까?');
+          setError('AI 데미안을 불러오는 중 문제가 발생했어요. 네트워크 연결을 확인하고 다시 시도해 줄래?');
       } finally {
           setIsCheckingConfig(false);
       }
@@ -170,7 +170,7 @@ const Gemini: React.FC = () => {
             onChange={(e) => setUserInput(e.target.value)}
             placeholder={
                 isLoading ? "AI가 생각 중이에요..." : 
-                error ? "연결에 문제가 있어요..." : 
+                error ? "지금은 대화할 수 없어요..." : 
                 isCheckingConfig ? "연결 확인 중..." : "데미안 AI에게 메시지 보내기..."
             }
             disabled={isLoading || !!error || isCheckingConfig}
