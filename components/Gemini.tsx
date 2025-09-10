@@ -27,7 +27,7 @@ const Gemini: React.FC = () => {
         setIsCheckingConfig(true);
         setError(null);
         try {
-            const response = await fetch('/api/status');
+            const response = await fetch('/.netlify/functions/status');
             if (!response.ok) {
                 // This would be for 500 errors from the status check itself
                 throw new Error('Server status check failed');
@@ -58,7 +58,7 @@ const Gemini: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/gemini', {
+      const response = await fetch('/.netlify/functions/gemini', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ history: newMessages }),
