@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 // Vercel 서버리스 함수 (Node.js 런타임)
-export default function handler(req: VercelRequest, res: VercelResponse) {
+const handler = (req: VercelRequest, res: VercelResponse) => {
     // GET 요청만 허용
     if (req.method !== 'GET') {
         res.setHeader('Allow', ['GET']);
@@ -22,4 +22,6 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
         console.error('Error in API status check:', error);
         return res.status(500).json({ status: 'error', reason: 'INTERNAL_SERVER_ERROR' });
     }
-}
+};
+
+module.exports = handler;

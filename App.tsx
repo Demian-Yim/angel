@@ -4,7 +4,6 @@ import Hero from './components/Hero.tsx';
 import ContentBlock from './components/ContentBlock.tsx';
 import Footer from './components/Footer.tsx';
 import MusicPlayer from './components/MusicPlayer.tsx';
-import Gemini from './components/Gemini.tsx';
 import PhotoGallery from './components/PhotoGallery.tsx';
 import { SECTIONS } from './constants.ts';
 
@@ -172,7 +171,6 @@ const App: React.FC = () => {
         <p>정말 많이 사랑해, 나의 천사 재윤아.</p>
       </>
     ),
-    'demian-ai': <Gemini />,
   };
 
   return (

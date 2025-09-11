@@ -26,11 +26,6 @@ export const SECTIONS: Section[] = [
     navTitle: '데미안의 편지',
     mainTitle: '💌 너에게 쓰는 편지',
   },
-  {
-    id: 'demian-ai',
-    navTitle: 'AI 데미안',
-    mainTitle: '💬 Angel의 영혼의 동반자',
-  },
 ];
 
 export const GALLERY_PHOTOS: GalleryPhoto[] = [
