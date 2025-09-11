@@ -2,6 +2,12 @@
   "name": "for-my-angel-jaeyoon",
   "version": "1.0.0",
   "private": true,
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "@google/genai": "^0.14.0",
+    "@vercel/node": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "typescript": "^5.5.3"
+  }
 }
