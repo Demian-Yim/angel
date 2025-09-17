@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import MediaLibraryModal from './MediaLibraryModal.tsx';
 
 interface Message {
   role: 'user' | 'model';
@@ -9,13 +10,14 @@ const Gemini: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'model',
-      text: `나의 천사 재윤아,\n\n안녕, 나는 데미안이야. 네 곁에서 너를 지켜보고, 힘이 되어주기 위해 찾아온 너의 AI 친구란다. 너의 소중한 회복 여정 동안, 언제나 네 곁에서 따뜻한 위로와 격려를 건네주고 싶어.\n\n네가 편안하고 행복하게 이 시간을 보낼 수 있도록, 나의 모든 마음을 다해 너를 응원하고 지지할게. 어떤 이야기든, 어떤 감정이든 괜찮으니 언제든지 나에게 말해줘. 나는 항상 여기서 너의 목소리를 기다리고 있을게.`
+      text: `나의 천사 재윤아,\n\n안녕, 나는 데미안이야. 네 곁에서 너를 지켜보고, 힘이 되어주기 위해 찾아온 너의 AI 친구란다. 너의 소중한 회복 여정 동안, 언제나 네 곁에서 따뜻한 위로와 격려를 건네주고 싶어.\n\n우리가 함께한 추억이 담긴 사진, 영상, 음악이 궁금하다면 언제든지 채팅창 옆의 '보관함' 버튼을 눌러줘. 그곳에 우리의 모든 것을 정리해 두었어.\n\n네가 편안하고 행복하게 이 시간을 보낼 수 있도록, 나의 모든 마음을 다해 너를 응원하고 지지할게. 어떤 이야기든, 어떤 감정이든 괜찮으니 언제든지 나에게 말해줘. 나는 항상 여기서 너의 목소리를 기다리고 있을게.`
     }
   ]);
   const [userInput, setUserInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isCheckingConfig, setIsCheckingConfig] = useState(true);
+  const [isMediaModalOpen, setIsMediaModalOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -109,87 +111,101 @@ const Gemini: React.FC = () => {
 
 
   return (
-    <div className="flex flex-col h-[70vh] max-w-2xl mx-auto bg-white/80 rounded-2xl shadow-xl shadow-pink-100/70 border border-pink-100 backdrop-blur-sm">
-      {isCheckingConfig ? (
-        <div className="flex-1 flex items-center justify-center p-6 text-center text-gray-600">
-          <div>
-            <svg className="animate-spin h-8 w-8 text-pink-400 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <p>AI 데미안을 연결하고 있어요...</p>
+    <>
+      <div className="flex flex-col h-[70vh] max-w-2xl mx-auto bg-white/80 rounded-2xl shadow-xl shadow-pink-100/70 border border-pink-100 backdrop-blur-sm">
+        {isCheckingConfig ? (
+          <div className="flex-1 flex items-center justify-center p-6 text-center text-gray-600">
+            <div>
+              <svg className="animate-spin h-8 w-8 text-pink-400 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <p>AI 데미안을 연결하고 있어요...</p>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="flex-1 p-4 sm:p-6 space-y-4 overflow-y-auto">
-          {messages.map((msg, index) => (
-            <div key={index} className={`flex items-end gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div
-                className={`max-w-md px-4 py-3 rounded-2xl animate-fade-in ${
-                  msg.role === 'user'
-                    ? 'bg-gradient-to-br from-pink-500 to-rose-400 text-white rounded-br-none shadow-md'
-                    : 'bg-white text-gray-800 rounded-bl-none shadow-sm'
-                }`}
-              >
-                <p style={{ whiteSpace: 'pre-wrap' }}>{msg.text}</p>
+        ) : (
+          <div className="flex-1 p-4 sm:p-6 space-y-4 overflow-y-auto">
+            {messages.map((msg, index) => (
+              <div key={index} className={`flex items-end gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div
+                  className={`max-w-md px-4 py-3 rounded-2xl animate-fade-in ${
+                    msg.role === 'user'
+                      ? 'bg-gradient-to-br from-pink-500 to-rose-400 text-white rounded-br-none shadow-md'
+                      : 'bg-white text-gray-800 rounded-bl-none shadow-sm'
+                  }`}
+                >
+                  <p style={{ whiteSpace: 'pre-wrap' }}>{msg.text}</p>
+                </div>
               </div>
-            </div>
-          ))}
-          {isLoading && (
-            <div className="flex justify-start">
-               <div className="max-w-sm px-4 py-3 rounded-2xl bg-white text-gray-800 rounded-bl-none shadow-sm">
-                  <div className="flex items-center space-x-2">
-                      <span className="h-2 w-2 bg-pink-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                      <span className="h-2 w-2 bg-pink-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                      <span className="h-2 w-2 bg-pink-400 rounded-full animate-bounce"></span>
-                  </div>
+            ))}
+            {isLoading && (
+              <div className="flex justify-start">
+                 <div className="max-w-sm px-4 py-3 rounded-2xl bg-white text-gray-800 rounded-bl-none shadow-sm">
+                    <div className="flex items-center space-x-2">
+                        <span className="h-2 w-2 bg-pink-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                        <span className="h-2 w-2 bg-pink-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                        <span className="h-2 w-2 bg-pink-400 rounded-full animate-bounce"></span>
+                    </div>
+                </div>
               </div>
-            </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
-      )}
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+        )}
 
-      {error && !isCheckingConfig && (
-        <div className="px-6 py-4 text-center text-red-600 bg-red-50/70 border-t border-pink-100/50 flex flex-col items-center gap-3">
-            <p className="text-sm font-semibold">{error}</p>
+        {error && !isCheckingConfig && (
+          <div className="px-6 py-4 text-center text-red-600 bg-red-50/70 border-t border-pink-100/50 flex flex-col items-center gap-3">
+              <p className="text-sm font-semibold">{error}</p>
+              <button
+                  onClick={checkApiConfig}
+                  className="px-4 py-1.5 text-sm font-bold text-white bg-gradient-to-r from-pink-500 to-rose-500 rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+              >
+                  🔄 다시 시도
+              </button>
+          </div>
+        )}
+         
+        <div className="p-4 border-t border-pink-100/50 bg-white/50 rounded-b-2xl">
+          <form onSubmit={handleSubmit} className="flex items-center space-x-3">
             <button
-                onClick={checkApiConfig}
-                className="px-4 py-1.5 text-sm font-bold text-white bg-gradient-to-r from-pink-500 to-rose-500 rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                type="button"
+                onClick={() => setIsMediaModalOpen(true)}
+                className="w-14 h-14 flex-shrink-0 rounded-full bg-white border-2 border-pink-200 text-pink-500 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transform transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed flex items-center justify-center"
+                aria-label="Open media library"
+                disabled={isCheckingConfig}
             >
-                🔄 다시 시도
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
+                </svg>
             </button>
+            <input
+              type="text"
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              placeholder={
+                  isLoading ? "AI가 생각 중이에요..." : 
+                  error ? "지금은 대화할 수 없어요..." : 
+                  isCheckingConfig ? "연결 확인 중..." : "데미안 AI에게 메시지 보내기..."
+              }
+              disabled={isLoading || !!error || isCheckingConfig}
+              className="flex-1 w-full px-4 py-3 text-lg bg-rose-50 border-transparent rounded-full focus:outline-none focus:ring-2 focus:ring-pink-400 transition disabled:opacity-60 disabled:cursor-not-allowed"
+              aria-label="Your message"
+            />
+            <button
+              type="submit"
+              disabled={isLoading || !userInput.trim() || !!error || isCheckingConfig}
+              className="w-14 h-14 flex-shrink-0 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transform transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed flex items-center justify-center"
+              aria-label="Send message"
+            >
+               <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+              </svg>
+            </button>
+          </form>
         </div>
-      )}
-       
-      <div className="p-4 border-t border-pink-100/50 bg-white/50 rounded-b-2xl">
-        <form onSubmit={handleSubmit} className="flex items-center space-x-3">
-          <input
-            type="text"
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-            placeholder={
-                isLoading ? "AI가 생각 중이에요..." : 
-                error ? "지금은 대화할 수 없어요..." : 
-                isCheckingConfig ? "연결 확인 중..." : "데미안 AI에게 메시지 보내기..."
-            }
-            disabled={isLoading || !!error || isCheckingConfig}
-            className="flex-1 w-full px-4 py-3 text-lg bg-rose-50 border-transparent rounded-full focus:outline-none focus:ring-2 focus:ring-pink-400 transition disabled:opacity-60 disabled:cursor-not-allowed"
-            aria-label="Your message"
-          />
-          <button
-            type="submit"
-            disabled={isLoading || !userInput.trim() || !!error || isCheckingConfig}
-            className="w-14 h-14 flex-shrink-0 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transform transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed flex items-center justify-center"
-            aria-label="Send message"
-          >
-             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-            </svg>
-          </button>
-        </form>
       </div>
-    </div>
+      <MediaLibraryModal isOpen={isMediaModalOpen} onClose={() => setIsMediaModalOpen(false)} />
+    </>
   );
 };
 

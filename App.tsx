@@ -4,7 +4,7 @@ import Hero from './components/Hero.tsx';
 import ContentBlock from './components/ContentBlock.tsx';
 import Footer from './components/Footer.tsx';
 import MusicPlayer from './components/MusicPlayer.tsx';
-import PhotoGallery from './components/PhotoGallery.tsx';
+import Gemini from './components/Gemini.tsx';
 import { SECTIONS } from './constants.ts';
 
 const App: React.FC = () => {
@@ -100,11 +100,7 @@ const App: React.FC = () => {
        <div className="space-y-10">
         <div>
           <h3 className="text-2xl font-bold text-pink-800 mb-4 text-center">다른 사람들은 어떻게 회복하고 있을까?</h3>
-          <p className="text-center mb-6">회복의 길이 가끔 외롭게 느껴질 수 있지만, 너는 혼자가 아니야. 다른 사람들은 어떻게 이겨내고 있는지 보면서 용기를 얻어보자! 내가 언제나 곁에 있을게.</p>
-          <div className="grid md:grid-cols-2 gap-4 text-center">
-            <div className="p-4 bg-rose-50 rounded-lg"><strong>힙업 거상술:</strong> 성예사, 디닥터스 카페</div>
-            <div className="p-4 bg-pink-50 rounded-lg"><strong>근육단축술:</strong> 뇌성마비 환우 모임, 재활의학과 카페</div>
-          </div>
+          <p className="text-center mb-6">회복의 길이 가끔 외롭게 느껴질 수 있지만, 너는 혼자가 아니야. 다른 사람들의 경험을 참고하며 용기를 얻어보자! 관련 커뮤니티 자료와 우리가 함께한 추억들은 <strong className="font-bold text-pink-600">'데미안의 편지'</strong> 섹션에 있는 AI 데미안과의 대화창에서 '보관함' 버튼을 눌러 언제든지 볼 수 있어.</p>
         </div>
         <div>
           <h3 className="text-2xl font-bold text-rose-800 mb-4 text-center">🚨 갑자기 아프거나 걱정될 땐?</h3>
@@ -126,72 +122,50 @@ const App: React.FC = () => {
         </div>
       </div>
     ),
-    'memories': (
-        <>
-            <p className="text-center mb-8">우리가 함께한 모든 순간은 별처럼 빛나. 사진을 클릭해서 더 크게 봐봐! ✨</p>
-            <PhotoGallery />
-            <div className="mt-16 text-center">
-              <div className="inline-block">
-                 <h3 className="text-3xl font-bold text-pink-700 mb-4">iCloud 공유 앨범</h3>
-                 <div className="mt-2 h-1 w-20 mx-auto bg-gradient-to-r from-pink-400 to-rose-400 rounded-full"></div>
-              </div>
-              <p className="mt-6 mb-8 max-w-xl mx-auto">이곳에 담지 못한 더 많은 사진과 영상들은 아래 공유 앨범에서 볼 수 있어. 우리의 모든 추억이 여기에 담겨있어!</p>
-              <div className="flex flex-col sm:flex-row justify-center items-center gap-8">
-                  <a
-                    href="https://www.icloud.com/sharedalbum/#B2ZG4TcsmHH43e"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group text-center"
-                  >
-                    <div className="bg-white p-3 rounded-lg shadow-lg group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2">
-                      <img src="https://i.imgur.com/NHjHD6K.jpeg" alt="Album cover for 2025 Angel & Demian" className="w-48 h-48 object-cover rounded-md" />
-                    </div>
-                    <p className="mt-4 font-semibold text-rose-700 text-lg">2025 Angel & Demian</p>
-                  </a>
-                  <a
-                    href="https://www.icloud.com/sharedalbum/#B2Z5nhQSTGd7snY"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group text-center"
-                  >
-                    <div className="bg-white p-3 rounded-lg shadow-lg group-hover:shadow-2xl transition-all duration-300 transform group-hover:-translate-y-2">
-                      <img src="https://i.imgur.com/83izx6D.jpeg" alt="Album cover for Kiss" className="w-48 h-48 object-cover rounded-md" />
-                    </div>
-                    <p className="mt-4 font-semibold text-pink-700 text-lg">Kiss Album</p>
-                  </a>
-                </div>
-            </div>
-          </>
-    ),
     'from-demian': (
-      <>
-        <p>재윤아, 내 세상이 되어줘서 정말 고마워. 너를 만나고 내 삶은 온통 너로 물들었어. 너의 웃음은 내게 가장 큰 행복이고, 너의 존재는 내게 가장 큰 힘이야.</p>
-        <p>부족한 점도 많고, 서툰 부분도 많은 나지만, 너에게만큼은 항상 최고의 사람이 되어주고 싶어. 세상에서 가장 많이 너를 아끼고, 사랑하고, 응원할게. 언제나 너의 곁에서 든든한 버팀목이 되어줄게.</p>
-        <p>너와 함께라면 어떤 미래든 두렵지 않아. 오히려 기대되고 설레. 같이 하고 싶은 것도, 가고 싶은 곳도 너무 많아. 너와 함께 만들어갈 미래는 분명, 지금보다 훨씬 더 찬란하게 빛날 거야. ✨</p>
-        <p>정말 많이 사랑해, 나의 천사 재윤아.</p>
-      </>
-    ),
+      <Gemini />
+    )
   };
 
   return (
-    <div className="bg-gradient-to-b from-rose-50 to-[#fffaf0]">
-      <Header innerRef={headerRef} sections={SECTIONS} activeSection={activeSection} onNavClick={handleNavClick} />
-      <MusicPlayer />
+    <div className="bg-rose-50/30 min-h-screen font-sans text-gray-800">
+      <Header sections={SECTIONS} activeSection={activeSection} onNavClick={handleNavClick} innerRef={headerRef} />
       <main>
         <Hero />
-        {SECTIONS.map((section) => (
-          <ContentBlock
-            key={section.id}
-            innerRef={(el) => {
-              sectionRefs.current[section.id] = el;
-            }}
-            title={section.mainTitle}
-          >
-            {sectionContent[section.id]}
-          </ContentBlock>
-        ))}
+        {SECTIONS.map((section) => {
+            // Special handling for the Gemini section to avoid double-padding/background
+            if (section.id === 'from-demian') {
+              return (
+                <section key={section.id} ref={(el: HTMLElement | null) => { sectionRefs.current[section.id] = el; }} className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+                  <div className="container mx-auto max-w-3xl">
+                    <div className="text-center mb-12">
+                      <h2 className="font-handwriting text-5xl md:text-6xl font-bold text-pink-700 inline-block">
+                        {section.mainTitle}
+                      </h2>
+                      <div className="mt-4 h-1 w-24 mx-auto bg-gradient-to-r from-pink-400 to-rose-400 rounded-full"></div>
+                    </div>
+                    {/* Render Gemini component directly */}
+                    {sectionContent[section.id]}
+                  </div>
+                </section>
+              );
+            }
+            // Default rendering for other sections
+            return (
+              <ContentBlock
+                key={section.id}
+                title={section.mainTitle}
+                innerRef={(el: HTMLElement | null) => {
+                  sectionRefs.current[section.id] = el;
+                }}
+              >
+                {sectionContent[section.id]}
+              </ContentBlock>
+            );
+        })}
+        <Footer />
       </main>
-      <Footer />
+      <MusicPlayer />
     </div>
   );
 };
